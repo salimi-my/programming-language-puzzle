@@ -101,7 +101,7 @@ export function SolverVisualization() {
           size="lg"
           className="bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-lg font-semibold"
         >
-          <Play className="mr-2 h-5 w-5" />
+          <Play className="size-5" />
           Start Solving
         </Button>
       </div>
@@ -148,18 +148,18 @@ export function SolverVisualization() {
           disabled={isComplete}
           className={
             isPlaying
-              ? "bg-orange-500 hover:bg-orange-600 text-white border-0 shadow-md"
-              : "bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md"
+              ? "bg-orange-500 hover:bg-orange-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
+              : "bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
           }
         >
           {isPlaying ? (
             <>
-              <Pause className="mr-2 h-4 w-4" />
+              <Pause className="size-4" />
               Pause
             </>
           ) : (
             <>
-              <Play className="mr-2 h-4 w-4" />
+              <Play className="size-4" />
               {currentStep === 0 ? "Auto Play" : "Resume"}
             </>
           )}
@@ -169,9 +169,9 @@ export function SolverVisualization() {
           onClick={handlePrevious}
           disabled={currentStep === 0}
           variant="outline"
-          className="border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 dark:border-indigo-800 dark:hover:bg-indigo-900/30"
+          className="border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 dark:border-indigo-800 dark:hover:bg-indigo-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <SkipBack className="mr-2 h-4 w-4" />
+          <SkipBack className="size-4" />
           Previous Step
         </Button>
 
@@ -179,9 +179,9 @@ export function SolverVisualization() {
           onClick={handleNext}
           disabled={isComplete}
           variant="outline"
-          className="border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900/30"
+          className="border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <SkipForward className="mr-2 h-4 w-4" />
+          <SkipForward className="size-4" />
           Next Step
         </Button>
 
@@ -189,18 +189,18 @@ export function SolverVisualization() {
           onClick={handleSkipToEnd}
           disabled={isComplete}
           variant="outline"
-          className="border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-900/30"
+          className="border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <FastForward className="mr-2 h-4 w-4" />
+          <FastForward className="size-4" />
           Skip to End
         </Button>
 
         <Button
           onClick={handleReset}
           variant="outline"
-          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30"
+          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <RotateCcw className="mr-2 h-4 w-4" />
+          <RotateCcw className="size-4" />
           Reset
         </Button>
       </div>
@@ -219,7 +219,7 @@ export function SolverVisualization() {
               <CardContent className="pt-6">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white text-sm font-bold">
+                    <div className="shrink-0 flex size-8 items-center justify-center rounded-full bg-blue-500 text-white text-sm font-bold">
                       {(currentStepData as SolverStep).clueApplied.id}
                     </div>
                     <div className="flex-1">
@@ -233,7 +233,7 @@ export function SolverVisualization() {
                   </div>
 
                   <Alert>
-                    <InfoIcon className="h-4 w-4" />
+                    <InfoIcon className="size-4" />
                     <AlertDescription className="text-sm">
                       <strong>Reasoning:</strong>{" "}
                       {(currentStepData as SolverStep).reasoning}

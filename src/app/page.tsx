@@ -31,20 +31,20 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div>
               <Link href="/">
-                <h1 className="text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 hover:opacity-80 transition-opacity cursor-pointer">
+                <h1 className="text-lg md:text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 hover:opacity-80 transition-opacity cursor-pointer">
                   Programming Language Puzzle
                 </h1>
               </Link>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400">
                 Discrete Structures - Logic Puzzle Solver
               </p>
             </div>
             <Button
               variant="outline"
               onClick={() => setShowHelp(true)}
-              className="border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900/30"
+              className="border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
             >
-              <BookOpen className="mr-2 h-4 w-4" />
+              <BookOpen className="size-4" />
               Help
             </Button>
           </div>
@@ -55,8 +55,8 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8">
         {/* Introduction */}
         <Card className="mb-8 border-2 border-purple-200/50 dark:border-purple-800/50 shadow-xl card-gradient">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-2xl">
+          <CardHeader className="pb-0 sm:pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg md:text-2xl leading-tight">
               <div className="p-2 rounded-lg bg-linear-to-br from-purple-500 to-pink-500 text-white shadow-lg">
                 <Brain className="h-6 w-6" />
               </div>
@@ -64,7 +64,7 @@ export default function Home() {
                 Puzzle 1: The Programming Language Challenge
               </span>
             </CardTitle>
-            <CardDescription className="text-base text-slate-700 dark:text-slate-300">
+            <CardDescription className="text-sm sm:text-base text-slate-700 dark:text-slate-300">
               Five students participate in a programming competition. Each uses
               a unique programming language and solves different types of
               problems. Can you figure out who uses which language and what
@@ -195,8 +195,12 @@ export default function Home() {
         <p className="font-medium">
           Discrete Structures Group Assignment - Logic Puzzle Implementation
         </p>
-        <p className="text-xs mt-1 text-slate-500 dark:text-slate-500">
-          Built by Group 1 - Azmeer, Ikram, Syah, Hafiy & Salimi (NBCS2554A)
+        <p className="text-xs mt-1 text-slate-500 dark:text-slate-500 px-4">
+          Built by Group 1 - <span className="font-bold">Azmeer</span>,{" "}
+          <span className="font-bold">Ikram</span>,{" "}
+          <span className="font-bold">Syah</span>,{" "}
+          <span className="font-bold">Hafiy</span> &{" "}
+          <span className="font-bold">Salimi</span> (NBCS2554A)
         </p>
       </footer>
 

@@ -360,24 +360,24 @@ export function ManualSolver() {
       <div className="flex flex-wrap gap-2">
         <Button
           onClick={handleGetHint}
-          className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 shadow-md"
+          className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <Lightbulb className="mr-2 h-4 w-4" />
+          <Lightbulb className="size-4" />
           Get Hint
         </Button>
         <Button
           onClick={handleCheckSolution}
-          className="bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-0 shadow-md"
+          className="bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <CheckCircle2 className="mr-2 h-4 w-4" />
+          <CheckCircle2 className="size-4" />
           Check Solution
         </Button>
         <Button
           onClick={handleReset}
           variant="outline"
-          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30"
+          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30 max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
         >
-          <RotateCcw className="mr-2 h-4 w-4" />
+          <RotateCcw className="size-4" />
           Reset
         </Button>
       </div>
@@ -463,7 +463,7 @@ export function ManualSolver() {
 
                   {/* Language Selection */}
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-semibold w-24 text-slate-700 dark:text-slate-300">
+                    <span className="text-sm font-semibold md:w-24 text-slate-700 dark:text-slate-300">
                       Language:
                     </span>
                     <Select
@@ -526,10 +526,10 @@ export function ManualSolver() {
 
                   {/* Problem Types */}
                   <div className="flex items-start gap-3">
-                    <span className="text-sm font-semibold w-24 pt-1 text-slate-700 dark:text-slate-300">
+                    <span className="text-sm font-semibold md:w-24 pt-1 text-slate-700 dark:text-slate-300">
                       Problems:
                     </span>
-                    <div className="flex-1 grid grid-cols-2 gap-2">
+                    <div className="flex-1 grid md:grid-cols-2 gap-2">
                       {PROBLEM_TYPES.map((problem) => (
                         <div
                           key={problem}

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageBadge } from "./LanguageBadge";
 import { ProblemTypeBadge } from "./ProblemTypeBadge";
@@ -76,7 +76,8 @@ export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
             onClick={onPrint}
             className="w-full mt-4 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white border-0 shadow-lg font-semibold"
           >
-            Print Solution for Submission
+            <Printer className="h-5 w-5" />
+            Print Solution
           </Button>
         )}
       </CardContent>
