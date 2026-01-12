@@ -48,35 +48,83 @@ Determine which student uses which programming language and which types of probl
 
 ## Solution Approach
 
-This puzzle is a **Constraint Satisfaction Problem (CSP)**. Our approach:
+This puzzle is solved using **Rules of Inference** from discrete mathematics. This demonstrates **CLO3: Constructing formal proofs of validity**.
 
-1. **Define Variables:**
+### Formal Proof Approach
 
-   - Student → Language mapping (5 variables, each with 5 possible values)
-   - Student → Problem Types mapping (5 variables, each with subsets of 4 problem types)
+1. **Formalize Premises:**
 
-2. **Define Constraints:**
+   - Convert each of the 10 natural language clues into formal logical notation
+   - Express relationships using logical operators (∧, ∨, ¬, →)
+   - Create a knowledge base of premises P1-P10
 
-   - Each clue represents a constraint that limits possible assignments
-   - Some constraints are direct assignments (e.g., "Charlie uses Swift")
-   - Others are implications (e.g., "Python user solves Math")
-   - Some are exclusions (e.g., "Bob does not use C++")
-   - Others are counting constraints (e.g., "Only two students solve Graph")
+2. **Apply Inference Rules:**
 
-3. **Apply Constraint Propagation:**
-   - Start with an empty solution state
-   - Apply each clue systematically
-   - Eliminate impossible assignments
-   - Deduce new assignments based on constraints
-   - Continue until the solution is complete
+   - **Simplification:** Extract facts from conjunctions (P ∧ Q ⊢ P)
+   - **Modus Ponens:** Apply implications (P, P → Q ⊢ Q)
+   - **Disjunctive Syllogism:** Eliminate options (P ∨ Q, ¬P ⊢ Q)
+   - **Elimination by Contradiction:** Prove by contradiction (¬P → ⊥ ⊢ P)
+   - **Conjunction:** Combine known facts (P, Q ⊢ P ∧ Q)
+
+3. **Build Formal Derivation:**
+
+   - Start with premises
+   - Apply inference rules step by step
+   - Track which premises are used in each step
+   - Derive new facts (D1, D2, ...) from premises
+   - Continue until all assignments are determined
+
+4. **Verify Solution:**
+   - Check that all 10 premises are satisfied
+   - Ensure no contradictions exist
+   - Validate completeness of solution
+
+### Why Rules of Inference?
+
+This approach demonstrates:
+
+- **Academic Rigor:** Formal mathematical proof construction
+- **Transparency:** Each step is logically justified
+- **Verifiability:** Easy to check correctness of each inference
+- **Educational Value:** Shows practical application of discrete mathematics
 
 ---
 
 ## Algorithm Explanation
 
-### Constraint Satisfaction Problem (CSP) Solver
+### Rules of Inference Engine
 
-Our solver implements a **forward-checking** algorithm with **constraint propagation**:
+Our solver implements formal logical deduction using **Rules of Inference** from discrete mathematics:
+
+#### Inference Rules Implemented
+
+1. **Simplification (Simp):** P ∧ Q ⊢ P
+
+   - Extracts individual facts from conjunctions
+   - Example: From "Charlie uses Swift ∧ solves Graph", derive "Charlie uses Swift"
+
+2. **Modus Ponens (MP):** P, P → Q ⊢ Q
+
+   - Applies conditional statements
+   - Example: "Eve solves Sorting", "Sorting → Logic", conclude "Eve solves Logic"
+
+3. **Disjunctive Syllogism (DS):** P ∨ Q, ¬P ⊢ Q
+
+   - Eliminates options through process of elimination
+   - Example: "Bob uses (Java ∨ C++)", "Bob ¬C++", conclude "Bob uses Java"
+
+4. **Elimination by Contradiction (EC):** Assume ¬P → ⊥ ⊢ P
+
+   - Proves statements by showing negation leads to contradiction
+   - Example: Assume Dave ¬C++, leads to no language available, therefore Dave uses C++
+
+5. **Conjunction (Conj):** P, Q ⊢ P ∧ Q
+   - Combines multiple known facts
+   - Example: "Bob solves Logic" + "Bob solves Graph" = "Bob solves (Logic ∧ Graph)"
+
+### Original CSP Solver (Alternative Implementation)
+
+The codebase also includes a **Constraint Satisfaction Problem (CSP)** solver using **forward-checking** algorithm with **constraint propagation**:
 
 ```
 ALGORITHM: Solve Puzzle
@@ -130,6 +178,88 @@ OUTPUT: Complete solution mapping students to languages and problems
 
 ---
 
+## Formal Proof Construction
+
+### Complete Logical Derivation
+
+A complete formal proof is available in [`FORMAL_PROOF.md`](./FORMAL_PROOF.md).
+
+#### Proof Summary
+
+The solution is derived through **17 complete derivation steps** using standard inference rules:
+
+| Step | Rule            | Conclusion                                  | From Premises             |
+| ---- | --------------- | ------------------------------------------- | ------------------------- |
+| D1   | Simplification  | Charlie.uses(Swift)                         | P2                        |
+| D2   | Simplification  | Alice.solves(Math)                          | P4                        |
+| D3   | Simplification  | Bob.solves(Logic)                           | P1                        |
+| D4   | Simplification  | Eve.solves(Sorting)                         | P6                        |
+| D5   | Modus Ponens    | Eve.solves(Logic)                           | D4, P8                    |
+| D6   | **Elimination** | Eve.uses(Ruby)                              | P6, D5, P5, D1            |
+| D7   | **Elimination** | Alice.uses(Python)                          | P4, D2, P3, D1, D6        |
+| D8   | **Elimination** | Dave.uses(C++)                              | P1, P7, D1, D6, D7        |
+| D9   | **Elimination** | Bob.uses(Java)                              | D1, D6, D7, D8            |
+| D10  | Simplification  | Charlie.solves(Graph)                       | P2                        |
+| D11  | Modus Ponens    | Dave.¬solves(Logic) ∧ Dave.¬solves(Graph)   | D8, P5, P7                |
+| D12  | Modus Tollens   | Dave.¬solves(Sorting)                       | D11, P8                   |
+| D13  | **Elimination** | Dave.solves(Math)                           | D11, D12                  |
+| D14  | Modus Ponens    | Alice.¬solves(Sorting)                      | D7, P3                    |
+| D15  | **Elimination** | Alice.¬solves(Logic) ∧ Alice.¬solves(Graph) | D2, D7, D14, P3           |
+| D16  | **Elimination** | Bob.solves(Graph)                           | P9, D10, D11, D15, D4, D5 |
+| D17  | Conjunction     | Bob.problemCount = 2 (Verification)         | D3, D16, D9, P10          |
+
+**All inference rules are STANDARD academic rules:**
+
+- ✅ **Simplification** (5 uses) - Extract conjuncts from P∧Q
+- ✅ **Modus Ponens** (3 uses) - P→Q, P ⊢ Q
+- ✅ **Modus Tollens** (1 use) - P→Q, ¬Q ⊢ ¬P
+- ✅ **Elimination** (7 uses) - Process of elimination
+- ✅ **Conjunction** (1 use) - P, Q ⊢ P∧Q
+- ✅ NO non-standard rules like "Direct Assignment"
+
+### Formal Notation Examples
+
+**Premise (P1):**
+
+```
+Bob.solves(Logic) ∧ ¬Bob.uses(C++)
+```
+
+**Derivation (Step 5):**
+
+```
+D4, P8 ⊢ Eve.solves(Logic) [MP]
+
+Where:
+  D4 = Eve.solves(Sorting)
+  P8 = ∀x (x.solves(Sorting) → x.solves(Logic))
+  MP = Modus Ponens
+```
+
+**Proof by Contradiction (Step 8):**
+
+```
+Assume: ¬Dave.uses(C++)
+Known: Swift→Charlie, Python→Alice, Ruby→Eve
+Remaining: Java, C++
+But: Bob ¬C++ (from P1)
+Result: No language for Dave → ⊥ (contradiction)
+Therefore: Dave.uses(C++)
+```
+
+### Verification
+
+All 10 premises are satisfied by the final solution:
+
+- ✅ P1-P10 validated
+- ✅ No contradictions
+- ✅ Complete assignment
+- ✅ All constraints met
+
+**See [`FORMAL_PROOF.md`](./FORMAL_PROOF.md) for the complete step-by-step derivation.**
+
+---
+
 ## Implementation Details
 
 ### Technology Stack
@@ -144,14 +274,18 @@ OUTPUT: Complete solution mapping students to languages and problems
 ```
 src/
 ├── types/
-│   └── puzzle.ts          # Type definitions for puzzle entities
+│   └── puzzle.ts          # Type definitions and formal logic types
 ├── lib/
-│   ├── solver.ts          # CSP solver implementation
+│   ├── solver.ts          # Main solver (exports inference engine)
+│   ├── inferenceEngine.ts # Rules of Inference implementation
+│   ├── formalLogic.ts     # Formal notation parser and utilities
 │   ├── validator.ts       # Constraint validation logic
 │   └── test-solver.ts     # Automated tests
 ├── components/
 │   ├── PuzzleGrid.tsx     # Grid display component
 │   ├── SolverVisualization.tsx  # Step-by-step solver UI
+│   ├── ProofStepDisplay.tsx     # Formal proof step display
+│   ├── ProofTree.tsx      # Proof tree visualization
 │   ├── ManualSolver.tsx   # Interactive manual solving mode
 │   ├── SolutionDisplay.tsx # Final solution display
 │   └── HelpDialog.tsx     # Help and instructions

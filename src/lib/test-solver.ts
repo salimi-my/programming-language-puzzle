@@ -29,10 +29,20 @@ console.log(
 console.log("📋 SOLVING STEPS:");
 console.log("=".repeat(60));
 result.steps.forEach((step) => {
-  console.log(`\nStep ${step.stepNumber}: Clue #${step.clueApplied.id}`);
-  console.log(`Clue: "${step.clueApplied.text}"`);
-  console.log(`Reasoning: ${step.reasoning}`);
-  console.log(`Action: ${JSON.stringify(step.action)}`);
+  // Check if this is a ProofStep (new format) or SolverStep (old format)
+  if ("inferenceRule" in step) {
+    // ProofStep format
+    console.log(`\nStep ${step.stepNumber}: ${step.inferenceRule}`);
+    console.log(`Formal Proof: ${step.formalProof}`);
+    console.log(`Reasoning: ${step.naturalLanguage}`);
+    console.log(`Action: ${JSON.stringify(step.action)}`);
+  } else {
+    // SolverStep format (legacy)
+    console.log(`\nStep ${step.stepNumber}: Clue #${step.clueApplied.id}`);
+    console.log(`Clue: "${step.clueApplied.text}"`);
+    console.log(`Reasoning: ${step.reasoning}`);
+    console.log(`Action: ${JSON.stringify(step.action)}`);
+  }
 });
 
 // Display final solution

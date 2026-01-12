@@ -78,9 +78,11 @@ export type SolverAction =
  */
 export interface SolutionResult {
   success: boolean;
-  steps: SolverStep[];
+  steps: SolverStep[] | ProofStep[]; // Can be either legacy steps or formal proof steps
+  proofSteps?: ProofStep[]; // Formal proof steps with inference rules
   finalState: PuzzleState;
   error?: string;
+  formalProof?: FormalProof; // Complete formal proof structure
 }
 
 /**
@@ -90,6 +92,88 @@ export interface ValidationResult {
   valid: boolean;
   violatedClues: Clue[];
   message?: string;
+}
+
+/**
+ * ============================================================================
+ * FORMAL LOGIC TYPES - Rules of Inference
+ * ============================================================================
+ */
+
+/**
+ * Inference Rules from Discrete Mathematics
+ */
+export enum InferenceRule {
+  MODUS_PONENS = "Modus Ponens",
+  MODUS_TOLLENS = "Modus Tollens",
+  ELIMINATION = "Elimination",
+  CONJUNCTION = "Conjunction",
+  SIMPLIFICATION = "Simplification",
+  DISJUNCTIVE_SYLLOGISM = "Disjunctive Syllogism",
+  RESOLUTION = "Resolution",
+  UNIVERSAL_INSTANTIATION = "Universal Instantiation",
+  HYPOTHETICAL_SYLLOGISM = "Hypothetical Syllogism",
+}
+
+/**
+ * Logical operators for formal notation
+ */
+export enum LogicalOperator {
+  AND = "∧",
+  OR = "∨",
+  NOT = "¬",
+  IMPLIES = "→",
+  IFF = "↔",
+  THEREFORE = "∴",
+  TURNSTILE = "⊢",
+}
+
+/**
+ * Formal premise derived from a clue
+ */
+export interface FormalPremise {
+  id: string; // P1, P2, ... P10
+  clue: Clue;
+  formalNotation: string; // Formal logical notation
+  naturalLanguage: string;
+  components: string[]; // Individual logical components
+}
+
+/**
+ * Proof step with formal inference rule
+ */
+export interface ProofStep {
+  stepNumber: number;
+  inferenceRule: InferenceRule;
+  premises: string[]; // Which premises used (e.g., ["P1", "P2", "D1"])
+  conclusion: string; // Formal notation of conclusion
+  formalProof: string; // e.g., "P1, P2 ⊢ Alice.uses(Python) [MP]"
+  naturalLanguage: string;
+  action: SolverAction;
+  stateAfter: PuzzleState;
+  derivedId?: string; // ID for derived facts (D1, D2, etc.)
+}
+
+/**
+ * Proof tree node for visualization
+ */
+export interface ProofNode {
+  id: string;
+  rule: InferenceRule;
+  premises: ProofNode[];
+  conclusion: string;
+  step: ProofStep;
+  level: number;
+}
+
+/**
+ * Complete proof structure
+ */
+export interface FormalProof {
+  premises: FormalPremise[];
+  steps: ProofStep[];
+  proofTree: ProofNode | null;
+  finalConclusion: string;
 }
 
 /**

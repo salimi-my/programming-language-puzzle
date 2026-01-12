@@ -1,8 +1,11 @@
 /**
- * Constraint Satisfaction Problem (CSP) Solver for Puzzle 1
+ * Puzzle Solver - Rules of Inference Implementation
  *
- * This solver uses constraint propagation and logical deduction to solve
- * the programming language puzzle step by step.
+ * This solver uses formal Rules of Inference from discrete mathematics
+ * to solve the programming language puzzle through logical deduction.
+ *
+ * NOTE: This file now exports both the original CSP solver and the new
+ * inference-based solver. The default export uses Rules of Inference.
  */
 
 import {
@@ -17,10 +20,14 @@ import {
   STUDENTS,
 } from "@/types/puzzle";
 
+// Import the new inference engine
+import { solvePuzzleWithInference as solvePuzzleInference } from "./inferenceEngine";
+
 /**
- * Main solver function that applies all clues step by step
+ * Original CSP solver function (kept for backwards compatibility)
+ * Uses constraint propagation approach
  */
-export function solvePuzzle(): SolutionResult {
+function solvePuzzleOriginal(): SolutionResult {
   const steps: SolverStep[] = [];
   let state = createEmptyPuzzleState();
   let stepNumber = 0;
@@ -427,3 +434,14 @@ export function getSolutionSummary(state: PuzzleState): string {
 
   return summary;
 }
+
+/**
+ * Export the original CSP-based solver for backwards compatibility
+ */
+export { solvePuzzleOriginal as solvePuzzleCSP };
+
+/**
+ * Main solver using Rules of Inference (NEW - default export)
+ * This is now the primary solving method, demonstrating formal proofs
+ */
+export { solvePuzzleInference as solvePuzzle };

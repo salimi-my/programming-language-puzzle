@@ -1,6 +1,6 @@
 # Programming Language Puzzle - Interactive Logic Solver
 
-An interactive web application for solving Puzzle 1 from the Discrete Structures group assignment. This app demonstrates Constraint Satisfaction Problem (CSP) solving through both automated and manual interactive modes.
+An interactive web application for solving Puzzle 1 from the Discrete Structures group assignment. This app demonstrates formal **Rules of Inference** from discrete mathematics to construct logical proofs, along with interactive CSP solving modes.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black)
 ![React](https://img.shields.io/badge/React-19.2.3-blue)
@@ -9,15 +9,34 @@ An interactive web application for solving Puzzle 1 from the Discrete Structures
 
 ## 🎯 Features
 
+### ✨ Formal Proof Construction
+
+The solver now uses **Rules of Inference** from discrete mathematics:
+
+- **Simplification:** Extract facts from conjunctions (P ∧ Q ⊢ P)
+- **Modus Ponens:** Apply implications (P, P → Q ⊢ Q)
+- **Disjunctive Syllogism:** Eliminate options (P ∨ Q, ¬P ⊢ Q)
+- **Elimination by Contradiction:** Prove by contradiction (¬P → ⊥ ⊢ P)
+- **Conjunction:** Combine known facts (P, Q ⊢ P ∧ Q)
+
+Each step displays:
+
+- Inference rule used
+- Formal logical notation
+- Premises referenced (P1, P2, ... D1, D2, ...)
+- Natural language explanation
+- Proof tree visualization
+
 ### ✨ Dual Interactive Modes
 
 1. **Auto-Solver Mode**
 
-   - Watch the AI solver apply each clue step-by-step
-   - Visual progress tracking
-   - Detailed reasoning for each step
-   - Controls: Play/Pause, Next Step, Skip to End, Reset
+   - Watch formal logical deduction step-by-step
+   - Visual progress tracking with inference rules
+   - Formal notation alongside natural language
+   - Controls: Play/Pause, Previous/Next Step, Skip to End, Reset
    - Real-time grid updates with animations
+   - Proof tree showing premises and derivations
 
 2. **Manual Solving Mode**
    - Interactive interface to solve the puzzle yourself
@@ -76,7 +95,23 @@ pnpm dev
 # http://localhost:3000
 ```
 
-### Testing the Solver
+### Testing the Solver (Rules of Inference)
+
+Run the inference engine test:
+
+```bash
+npx tsx src/lib/test-solver.ts
+```
+
+This will:
+
+- Execute all 10 inference steps
+- Display formal proof notation
+- Show which inference rules were applied
+- Validate the final solution
+- Verify all constraints are satisfied
+
+### Testing the Solver (Legacy CSP)
 
 Run the automated test suite to verify the solver correctness:
 
@@ -95,16 +130,20 @@ Expected output:
 ```
 src/
 ├── types/
-│   └── puzzle.ts              # TypeScript type definitions
+│   └── puzzle.ts              # Type definitions + formal logic types
 ├── lib/
-│   ├── solver.ts              # CSP solver implementation
+│   ├── solver.ts              # Main solver (exports inference engine)
+│   ├── inferenceEngine.ts     # Rules of Inference implementation
+│   ├── formalLogic.ts         # Formal notation parser & utilities
 │   ├── validator.ts           # Constraint validation
 │   ├── test-solver.ts         # Automated tests
 │   └── utils.ts               # Utility functions
 ├── components/
 │   ├── ui/                    # Shadcn UI components
 │   ├── PuzzleGrid.tsx         # Grid display
-│   ├── SolverVisualization.tsx # Auto-solver UI
+│   ├── SolverVisualization.tsx # Auto-solver UI with formal proofs
+│   ├── ProofStepDisplay.tsx   # Formal proof step display
+│   ├── ProofTree.tsx          # Proof tree visualization
 │   ├── ManualSolver.tsx       # Manual mode UI
 │   ├── SolutionDisplay.tsx    # Final solution display
 │   └── HelpDialog.tsx         # Help modal
@@ -112,17 +151,28 @@ src/
     ├── page.tsx               # Main application page
     ├── layout.tsx             # Root layout
     └── globals.css            # Global styles
+
+Documentation/
+├── FORMAL_PROOF.md            # Complete formal proof derivation
+├── PROJECT_WRITEUP.md         # Detailed assignment writeup
+└── README.md                  # This file
 ```
 
 ## 🔧 Technical Details
 
 ### Algorithm
 
-The solver uses a **Constraint Satisfaction Problem (CSP)** approach with:
+The solver uses **Rules of Inference** from discrete mathematics:
 
-- **Constraint Propagation:** Systematically applying rules to eliminate impossible values
-- **Forward Checking:** Pruning invalid assignments early
-- **Logical Deduction:** Using process of elimination
+- **Simplification:** Extract facts from conjunctions (P ∧ Q ⊢ P)
+- **Modus Ponens:** Apply conditional statements (P, P → Q ⊢ Q)
+- **Disjunctive Syllogism:** Eliminate options (P ∨ Q, ¬P ⊢ Q)
+- **Elimination by Contradiction:** Prove by contradiction (¬P → ⊥ ⊢ P)
+- **Conjunction:** Combine known facts (P, Q ⊢ P ∧ Q)
+
+**See [`FORMAL_PROOF.md`](./FORMAL_PROOF.md) for complete derivation.**
+
+Alternative CSP implementation also available for comparison.
 
 ### Technology Stack
 
@@ -153,10 +203,17 @@ The minimal valid solution found by the solver (based strictly on the 10 clues):
 1. Click on the **"Auto Solver"** tab
 2. Click **"Start Solving"** to begin
 3. Use the controls to navigate:
-   - **Auto Play** - Watch the solver run automatically
-   - **Next Step** - Advance one clue at a time
+   - **Auto Play** - Watch the formal proof construction automatically
+   - **Previous Step** - Go back one inference step
+   - **Next Step** - Advance one inference step at a time
    - **Skip to End** - Jump to the final solution
    - **Reset** - Start over
+4. Observe:
+   - Inference rule name and type
+   - Formal logical notation
+   - Premises used (P1-P10, D1-D10)
+   - Natural language explanation
+   - Proof tree visualization
 
 ### Manual Mode
 

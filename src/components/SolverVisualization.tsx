@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { solvePuzzle } from "@/lib/solver";
-import { SolutionResult, SolverStep } from "@/types/puzzle";
+import { SolutionResult, SolverStep, ProofStep } from "@/types/puzzle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { PuzzleGrid } from "./PuzzleGrid";
 import { SolutionDisplay } from "./SolutionDisplay";
+import { ProofStepDisplay } from "./ProofStepDisplay";
+import { ProofTree } from "./ProofTree";
 import {
   Play,
   Pause,
@@ -112,7 +114,8 @@ export function SolverVisualization() {
     );
   }
 
-  const currentStepData: SolverStep | undefined = solution.steps[currentStep];
+  const currentStepData: SolverStep | ProofStep | undefined =
+    solution.steps[currentStep];
   const progress = ((currentStep + 1) / solution.steps.length) * 100;
   const isComplete = currentStep === solution.steps.length - 1;
 
@@ -180,34 +183,45 @@ export function SolverVisualization() {
         </Button>
       </div>
 
-      {/* Current Step Info */}
+      {/* Current Step Info - Display formal proof if available */}
       {currentStepData && (
-        <Card className="border-blue-200 dark:border-blue-900">
-          <CardContent className="pt-6">
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white text-sm font-bold">
-                  {currentStepData.clueApplied.id}
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold mb-1">
-                    Clue #{currentStepData.clueApplied.id}
+        <>
+          {/* Check if this is a ProofStep (has inferenceRule) or SolverStep (has clueApplied) */}
+          {"inferenceRule" in currentStepData ? (
+            <ProofStepDisplay
+              step={currentStepData as unknown as ProofStep}
+              highlighted={true}
+            />
+          ) : (
+            <Card className="border-blue-200 dark:border-blue-900">
+              <CardContent className="pt-6">
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white text-sm font-bold">
+                      {(currentStepData as SolverStep).clueApplied.id}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold mb-1">
+                        Clue #{(currentStepData as SolverStep).clueApplied.id}
+                      </div>
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
+                        {(currentStepData as SolverStep).clueApplied.text}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
-                    {currentStepData.clueApplied.text}
-                  </p>
-                </div>
-              </div>
 
-              <Alert>
-                <InfoIcon className="h-4 w-4" />
-                <AlertDescription className="text-sm">
-                  <strong>Reasoning:</strong> {currentStepData.reasoning}
-                </AlertDescription>
-              </Alert>
-            </div>
-          </CardContent>
-        </Card>
+                  <Alert>
+                    <InfoIcon className="h-4 w-4" />
+                    <AlertDescription className="text-sm">
+                      <strong>Reasoning:</strong>{" "}
+                      {(currentStepData as SolverStep).reasoning}
+                    </AlertDescription>
+                  </Alert>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </>
       )}
 
       {/* Puzzle Grid */}
@@ -225,6 +239,15 @@ export function SolverVisualization() {
           />
         </CardContent>
       </Card>
+
+      {/* Proof Tree - Animated to show progression */}
+      {solution.formalProof && solution.proofSteps && (
+        <ProofTree
+          premises={solution.formalProof.premises}
+          steps={solution.proofSteps.slice(0, currentStep + 1)}
+          currentStepIndex={currentStep}
+        />
+      )}
 
       {/* Final Solution Display */}
       {isComplete && (
