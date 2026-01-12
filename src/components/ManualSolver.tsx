@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import {
   PuzzleState,
   Student,
@@ -18,7 +20,6 @@ import {
   checkMaxProblemsConstraint,
   checkUniqueLanguages,
 } from "@/lib/validator";
-import { solvePuzzle } from "@/lib/solver";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -50,6 +51,88 @@ const getLanguageIcon = (language: Language): string => {
   };
   return iconMap[language];
 };
+
+// Helper function to deep copy PuzzleState
+function clonePuzzleState(state: PuzzleState): PuzzleState {
+  const newState: PuzzleState = {
+    students: new Map(),
+    availableLanguages: new Set(state.availableLanguages),
+    problemCount: new Map(state.problemCount),
+  };
+
+  state.students.forEach((solution, student) => {
+    newState.students.set(student, {
+      student,
+      language: solution.language,
+      problems: new Set(solution.problems),
+    });
+  });
+
+  return newState;
+}
+
+// Manual solution steps (simplified 9-step approach)
+function getManualSolutionSteps() {
+  const steps: PuzzleState[] = [];
+
+  // Helper to add a problem and update count
+  const addProblem = (
+    state: PuzzleState,
+    student: Student,
+    problem: ProblemType
+  ) => {
+    state.students.get(student)!.problems.add(problem);
+    const currentCount = state.problemCount.get(problem) || 0;
+    state.problemCount.set(problem, currentCount + 1);
+  };
+
+  // Step 1: Charlie uses Swift and solves Graph (Clue 2)
+  const currentState = createEmptyPuzzleState();
+  currentState.students.get("Charlie")!.language = "Swift";
+  addProblem(currentState, "Charlie", "Graph");
+  currentState.availableLanguages.delete("Swift");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 2: Alice solves Math (Clue 4)
+  addProblem(currentState, "Alice", "Math");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 3: Bob solves Logic (Clue 1)
+  addProblem(currentState, "Bob", "Logic");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 4: Eve solves Sorting + Logic (Clues 6 + 8)
+  addProblem(currentState, "Eve", "Sorting");
+  addProblem(currentState, "Eve", "Logic");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 5: Eve uses Ruby (deduced from Clues 5, 6 and Eve solves Logic)
+  currentState.students.get("Eve")!.language = "Ruby";
+  currentState.availableLanguages.delete("Ruby");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 6: Alice uses Python (deduced from Clue 3, process of elimination)
+  currentState.students.get("Alice")!.language = "Python";
+  currentState.availableLanguages.delete("Python");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 7: Bob uses Java, Dave uses C++ (deduced from Clue 10 and process of elimination)
+  currentState.students.get("Bob")!.language = "Java";
+  currentState.students.get("Dave")!.language = "C++";
+  currentState.availableLanguages.delete("Java");
+  currentState.availableLanguages.delete("C++");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 8: Bob solves Graph (deduced from Clue 9, Bob is the second Graph solver)
+  addProblem(currentState, "Bob", "Graph");
+  steps.push(clonePuzzleState(currentState));
+
+  // Step 9: Dave solves Math (deduced from Clue 5 and Clue 8)
+  addProblem(currentState, "Dave", "Math");
+  steps.push(clonePuzzleState(currentState));
+
+  return steps;
+}
 
 export function ManualSolver() {
   const [state, setState] = useState<PuzzleState>(createEmptyPuzzleState());
@@ -124,12 +207,115 @@ export function ManualSolver() {
 
   // Get hint (apply next clue)
   const handleGetHint = () => {
-    const solution = solvePuzzle();
-    if (solution.success && nextHintStep < solution.steps.length) {
-      const step = solution.steps[nextHintStep];
-      setState(step.stateAfter);
+    const manualSteps = getManualSolutionSteps();
+    if (nextHintStep < manualSteps.length) {
+      const stateBefore = state;
+      const stateAfter = manualSteps[nextHintStep];
+
+      // Apply the hint
+      setState(stateAfter);
       setNextHintStep(nextHintStep + 1);
       setShowValidation(false);
+
+      // Detect changes and show driver.js highlight
+      const changes: {
+        student: Student;
+        languageChange?: string;
+        problemsAdded?: string[];
+        problemsRemoved?: string[];
+      }[] = [];
+
+      // Check each student for changes
+      STUDENTS.forEach((student) => {
+        const before = stateBefore.students.get(student)!;
+        const after = stateAfter.students.get(student)!;
+
+        let hasChanges = false;
+        const change: {
+          student: Student;
+          languageChange?: string;
+          problemsAdded?: string[];
+          problemsRemoved?: string[];
+        } = { student };
+
+        // Check language change
+        if (before.language !== after.language) {
+          hasChanges = true;
+          if (after.language) {
+            change.languageChange = `Now uses ${after.language}`;
+          } else {
+            change.languageChange = "Language removed";
+          }
+        }
+
+        // Check problem changes
+        const problemsBefore = Array.from(before.problems);
+        const problemsAfter = Array.from(after.problems);
+        const added = problemsAfter.filter((p) => !problemsBefore.includes(p));
+        const removed = problemsBefore.filter(
+          (p) => !problemsAfter.includes(p)
+        );
+
+        if (added.length > 0) {
+          hasChanges = true;
+          change.problemsAdded = added;
+        }
+        if (removed.length > 0) {
+          hasChanges = true;
+          change.problemsRemoved = removed;
+        }
+
+        if (hasChanges) {
+          changes.push(change);
+        }
+      });
+
+      // Show driver.js highlight for the first changed student
+      if (changes.length > 0) {
+        const firstChange = changes[0];
+
+        // Create intuitive hint descriptions based on manual solution approach
+        const title = `Hint ${nextHintStep + 1}: ${firstChange.student}`;
+        let description = "";
+
+        // Map each step to its intuitive reasoning (9-step manual solution)
+        const hintDescriptions: Record<number, string> = {
+          1: `📖 From <strong>Clue 2</strong>: Charlie uses Swift and solves Graph problems.\n\n→ Select Swift for Charlie's language AND check Graph problem.`,
+          2: `📖 From <strong>Clue 4</strong>: Alice solves Math problems.\n\n→ Check Math for Alice.`,
+          3: `📖 From <strong>Clue 1</strong>: Bob solves Logic problems.\n\n→ Check Logic for Bob.`,
+          4: `📖 From <strong>Clue 6</strong>: Eve solves Sorting problems.\n\n📖 From <strong>Clue 8</strong>: Student solving Sorting also solves Logic.\n\n→ Check both Sorting AND Logic for Eve.`,
+          5: `🧩 <strong>Determine Eve's language:</strong>\n\nEve doesn't use Java or Python (Clue 6), and Charlie uses Swift.\n\nFrom <strong>Clue 5</strong>: C++ user can't solve Logic or Graph. But Eve solves Logic!\n\n→ Eve must use Ruby. Select Ruby for Eve.`,
+          6: `🧩 <strong>Determine Alice's language:</strong>\n\nAlice solves Math. From <strong>Clue 3</strong>: Python user solves Math.\n\nAlice doesn't use Ruby or Swift (Clue 4). Charlie uses Swift, Eve uses Ruby.\n\n→ Alice must use Python. Select Python for Alice.`,
+          7: `🧩 <strong>Assign remaining languages:</strong>\n\nFrom <strong>Clue 10</strong>: Java user solves exactly 2 problem types.\n\nBob solves Logic. If Bob uses Java and also solves Graph = 2 types ✓\n\nFrom <strong>Clue 1</strong>: Bob doesn't use C++.\n\n→ Select Java for Bob AND C++ for Dave.`,
+          8: `🧩 <strong>Identify the second Graph solver:</strong>\n\nFrom <strong>Clue 9</strong>: Only 2 students solve Graph.\n\nCharlie solves Graph (Step 1). From <strong>Clue 7</strong>: Dave doesn't solve Graph.\n\nEve solves Sorting + Logic. Alice, Dave, and Eve don't solve Graph.\n\n→ Bob must solve Graph. Check Graph for Bob.`,
+          9: `🧩 <strong>Determine Dave's problems:</strong>\n\nDave uses C++ and can't solve Logic or Graph (Clue 5).\n\nFrom <strong>Clue 8</strong>: Sorting solver must also solve Logic, so Dave can't solve Sorting.\n\n→ Dave can only solve Math. Check Math for Dave.`,
+        };
+
+        // Get the description for this hint step
+        description =
+          hintDescriptions[nextHintStep + 1] ||
+          `This step can be deduced from the clues and constraints.`;
+
+        // Trigger driver.js
+        setTimeout(() => {
+          const driverObj = driver({
+            showProgress: false,
+            showButtons: ["next"],
+            steps: [
+              {
+                element: `#student-${firstChange.student.toLowerCase()}`,
+                popover: {
+                  title: title,
+                  description: description.trim(),
+                  side: "left",
+                  align: "start",
+                },
+              },
+            ],
+          });
+          driverObj.drive();
+        }, 100);
+      }
     }
   };
 
@@ -266,6 +452,7 @@ export function ManualSolver() {
               return (
                 <div
                   key={student}
+                  id={`student-${student.toLowerCase()}`}
                   className="p-4 rounded-lg border-2 border-indigo-100 dark:border-indigo-900/50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm space-y-3 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]"
                 >
                   <div className="flex items-center justify-between">

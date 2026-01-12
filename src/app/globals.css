@@ -191,3 +191,39 @@
     text-shadow: none !important;
   }
 }
+
+/* Driver.js custom theme */
+.driver-popover {
+  background: linear-gradient(to bottom right, #eff6ff, #f5f3ff) !important;
+  border: 2px solid rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.driver-popover-title {
+  background: linear-gradient(to right, #6366f1, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.driver-popover-description {
+  color: #475569;
+}
+
+.driver-popover-next-btn {
+  background: linear-gradient(to right, #6366f1, #9333ea) !important;
+  border: none !important;
+  text-shadow: none !important;
+  color: #ffffff !important;
+}
+
+/* Dark mode adjustments for driver.js */
+.dark .driver-popover {
+  background: linear-gradient(to bottom right, #1e293b, #312e81) !important;
+  border: 2px solid rgba(139, 92, 246, 0.5) !important;
+}
+
+.dark .driver-popover-description {
+  color: #cbd5e1;
+}
