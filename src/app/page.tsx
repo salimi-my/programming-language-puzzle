@@ -12,10 +12,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Brain, Play } from "lucide-react";
-import { CLUES } from "@/types/puzzle";
+import { CLUES, Language, ProblemType } from "@/types/puzzle";
 import { SolverVisualization } from "@/components/SolverVisualization";
 import { ManualSolver } from "@/components/ManualSolver";
 import { HelpDialog } from "@/components/HelpDialog";
+import { LanguageBadge } from "@/components/LanguageBadge";
+import { ProblemTypeBadge } from "@/components/ProblemTypeBadge";
 
 export default function Home() {
   const [showHelp, setShowHelp] = useState(false);
@@ -62,7 +64,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
               <div>
                 <h4 className="font-semibold mb-2">Students</h4>
-                <div className="space-y-1">
+                <div className="flex flex-wrap gap-1">
                   {["Alice", "Bob", "Charlie", "Dave", "Eve"].map((s) => (
                     <Badge key={s} variant="outline">
                       {s}
@@ -72,22 +74,26 @@ export default function Home() {
               </div>
               <div>
                 <h4 className="font-semibold mb-2">Languages</h4>
-                <div className="space-y-1">
-                  {["Python", "Java", "C++", "Ruby", "Swift"].map((l) => (
-                    <Badge key={l} variant="secondary">
-                      {l}
-                    </Badge>
+                <div className="flex flex-wrap gap-1">
+                  {(
+                    ["Python", "Java", "C++", "Ruby", "Swift"] as Language[]
+                  ).map((l) => (
+                    <LanguageBadge key={l} language={l} variant="secondary" />
                   ))}
                 </div>
               </div>
               <div className="col-span-2 md:col-span-3">
                 <h4 className="font-semibold mb-2">Problem Types</h4>
-                <div className="flex flex-wrap gap-2">
-                  {["Math", "Logic", "Sorting", "Graph"].map((p) => (
-                    <Badge key={p} variant="default">
-                      {p}
-                    </Badge>
-                  ))}
+                <div className="flex flex-wrap gap-1">
+                  {(["Math", "Logic", "Sorting", "Graph"] as ProblemType[]).map(
+                    (p) => (
+                      <ProblemTypeBadge
+                        key={p}
+                        problemType={p}
+                        variant="default"
+                      />
+                    )
+                  )}
                 </div>
               </div>
             </div>

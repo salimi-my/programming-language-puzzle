@@ -7,8 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { LanguageBadge } from "./LanguageBadge";
+import { ProblemTypeBadge } from "./ProblemTypeBadge";
 
 interface PuzzleGridProps {
   state: PuzzleState;
@@ -47,9 +48,11 @@ export function PuzzleGrid({
                 <TableCell className="font-medium">{student}</TableCell>
                 <TableCell>
                   {solution.language ? (
-                    <Badge variant="secondary" className="text-xs">
-                      {solution.language}
-                    </Badge>
+                    <LanguageBadge
+                      language={solution.language}
+                      variant="secondary"
+                      className="text-xs"
+                    />
                   ) : (
                     <span className="text-zinc-400 text-sm">Not assigned</span>
                   )}
@@ -58,13 +61,12 @@ export function PuzzleGrid({
                   {solution.problems.size > 0 ? (
                     <div className="flex flex-wrap gap-1">
                       {Array.from(solution.problems).map((problem) => (
-                        <Badge
+                        <ProblemTypeBadge
                           key={problem}
+                          problemType={problem}
                           variant="default"
                           className="text-xs"
-                        >
-                          {problem}
-                        </Badge>
+                        />
                       ))}
                     </div>
                   ) : (

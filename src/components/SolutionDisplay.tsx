@@ -6,9 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LanguageBadge } from "./LanguageBadge";
+import { ProblemTypeBadge } from "./ProblemTypeBadge";
 
 interface SolutionDisplayProps {
   state: PuzzleState;
@@ -41,7 +42,10 @@ export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
                 <span className="text-sm text-zinc-600 dark:text-zinc-400">
                   Language:
                 </span>
-                <Badge variant="secondary">{solution.language}</Badge>
+                <LanguageBadge
+                  language={solution.language!}
+                  variant="secondary"
+                />
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -49,9 +53,11 @@ export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
                 </span>
                 <div className="flex flex-wrap gap-1">
                   {Array.from(solution.problems).map((problem) => (
-                    <Badge key={problem} variant="default">
-                      {problem}
-                    </Badge>
+                    <ProblemTypeBadge
+                      key={problem}
+                      problemType={problem}
+                      variant="default"
+                    />
                   ))}
                 </div>
               </div>
