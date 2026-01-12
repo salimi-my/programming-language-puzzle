@@ -25,12 +25,13 @@ export function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
         </DialogHeader>
 
         <div className="space-y-4 max-h-[60vh] overflow-y-auto py-1">
-          <Alert>
-            <InfoIcon className="h-4 w-4" />
-            <AlertDescription>
-              This is a Constraint Satisfaction Problem (CSP) solver that
-              demonstrates logical deduction through step-by-step constraint
-              propagation.
+          <Alert className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
+            <InfoIcon className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <AlertDescription className="text-slate-700 dark:text-slate-300">
+              This solver uses{" "}
+              <strong>Formal Logic and Rules of Inference</strong> to
+              demonstrate rigorous mathematical proof construction through
+              systematic logical deduction.
             </AlertDescription>
           </Alert>
 
@@ -50,15 +51,18 @@ export function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
               <li>
                 Click &quot;Start Solving&quot; to begin the automatic solver
               </li>
-              <li>Use &quot;Next Step&quot; to advance one clue at a time</li>
+              <li>
+                Use &quot;Previous/Next Step&quot; to navigate through the proof
+              </li>
               <li>
                 Use &quot;Auto Play&quot; to watch the solver complete the
                 puzzle automatically
               </li>
               <li>
-                Each step shows which clue is applied and the reasoning behind
-                it
+                Each step shows the inference rule used, formal logical
+                notation, and natural language reasoning
               </li>
+              <li>The proof tree visualizes the 17-step derivation process</li>
               <li>The grid updates in real-time to show assignments</li>
             </ul>
           </div>
@@ -83,17 +87,43 @@ export function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
           <div>
             <h3 className="font-semibold mb-2">About the Algorithm</h3>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              This solver uses a{" "}
-              <strong>Constraint Satisfaction Problem (CSP)</strong> approach
-              with constraint propagation. It applies each clue systematically
-              to eliminate impossible assignments and deduce the correct
-              solution. The algorithm demonstrates:
+              This solver uses{" "}
+              <strong>Formal Logic and Rules of Inference</strong> from discrete
+              mathematics to construct a rigorous mathematical proof. Starting
+              from 10 premises (P1-P10), it derives 17 logical conclusions
+              (D1-D17) to solve the puzzle. The algorithm demonstrates:
             </p>
             <ul className="list-disc list-inside text-sm text-zinc-600 dark:text-zinc-400 mt-2 space-y-1">
-              <li>Forward checking - pruning impossible values</li>
-              <li>Constraint propagation - inferring new assignments</li>
-              <li>Logical deduction - applying rules systematically</li>
+              <li>
+                <strong>Simplification</strong> - Extracting individual facts
+                from conjunctions
+              </li>
+              <li>
+                <strong>Modus Ponens</strong> - If P implies Q and P is true,
+                then Q is true
+              </li>
+              <li>
+                <strong>Modus Tollens</strong> - If P implies Q and Q is false,
+                then P is false
+              </li>
+              <li>
+                <strong>Elimination</strong> - Deducing facts by ruling out all
+                other possibilities
+              </li>
+              <li>
+                <strong>Conjunction</strong> - Combining multiple known true
+                statements
+              </li>
+              <li>
+                <strong>Universal Instantiation</strong> - Applying universal
+                constraints to specific cases
+              </li>
             </ul>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2">
+              Each derivation is formally notated as{" "}
+              <strong>Premises ⊢ Conclusion [Rule]</strong>, ensuring academic
+              rigor and mathematical validity.
+            </p>
           </div>
         </div>
       </DialogContent>
