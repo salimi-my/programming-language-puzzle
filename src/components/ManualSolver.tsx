@@ -275,7 +275,10 @@ export function ManualSolver() {
         const firstChange = changes[0];
 
         // Create intuitive hint descriptions based on manual solution approach
-        const title = `Hint ${nextHintStep + 1}: ${firstChange.student}`;
+        const isLastHint = nextHintStep === manualSteps.length - 1;
+        const title = isLastHint
+          ? `Final Hint: ${firstChange.student}`
+          : `Hint ${nextHintStep + 1}: ${firstChange.student}`;
         let description = "";
 
         // Map each step to its intuitive reasoning (9-step manual solution)
