@@ -16,7 +16,7 @@ interface HelpDialogProps {
 export function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="md:max-w-2xl!">
         <DialogHeader>
           <DialogTitle>How to Use This Puzzle Solver</DialogTitle>
           <DialogDescription>
@@ -24,7 +24,7 @@ export function HelpDialog({ open, onOpenChange }: HelpDialogProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 max-h-[60vh] overflow-y-auto py-1">
           <Alert>
             <InfoIcon className="h-4 w-4" />
             <AlertDescription>

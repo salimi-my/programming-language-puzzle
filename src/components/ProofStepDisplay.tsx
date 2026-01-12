@@ -11,26 +11,26 @@ interface ProofStepDisplayProps {
 }
 
 /**
- * Get color for inference rule badge
+ * Get gradient color for inference rule badge
  */
 function getRuleColor(rule: InferenceRule): string {
   switch (rule) {
     case InferenceRule.MODUS_PONENS:
-      return "bg-blue-500 text-white hover:bg-blue-600";
+      return "bg-linear-to-r from-blue-500 to-cyan-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.MODUS_TOLLENS:
-      return "bg-indigo-500 text-white hover:bg-indigo-600";
+      return "bg-linear-to-r from-indigo-500 to-purple-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.ELIMINATION:
-      return "bg-red-500 text-white hover:bg-red-600";
+      return "bg-linear-to-r from-red-500 to-orange-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.CONJUNCTION:
-      return "bg-green-500 text-white hover:bg-green-600";
+      return "bg-linear-to-r from-green-500 to-emerald-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.DISJUNCTIVE_SYLLOGISM:
-      return "bg-purple-500 text-white hover:bg-purple-600";
+      return "bg-linear-to-r from-purple-500 to-pink-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.SIMPLIFICATION:
-      return "bg-yellow-500 text-white hover:bg-yellow-600";
+      return "bg-linear-to-r from-yellow-500 to-orange-500 text-white border-0 shadow-md hover:shadow-lg";
     case InferenceRule.UNIVERSAL_INSTANTIATION:
-      return "bg-pink-500 text-white hover:bg-pink-600";
+      return "bg-linear-to-r from-pink-500 to-rose-500 text-white border-0 shadow-md hover:shadow-lg";
     default:
-      return "bg-zinc-500 text-white hover:bg-zinc-600";
+      return "bg-linear-to-r from-slate-500 to-zinc-500 text-white border-0 shadow-md hover:shadow-lg";
   }
 }
 
@@ -41,8 +41,10 @@ export function ProofStepDisplay({
   return (
     <Card
       className={cn(
-        "transition-all",
-        highlighted && "ring-2 ring-blue-500 shadow-lg"
+        "transition-all border-2 card-gradient shadow-lg",
+        highlighted
+          ? "ring-2 ring-indigo-500 border-indigo-300 dark:border-indigo-700"
+          : "border-blue-100 dark:border-blue-900/50"
       )}
     >
       <CardContent className="pt-6">

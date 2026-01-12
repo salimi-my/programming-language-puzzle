@@ -18,13 +18,17 @@ interface SolutionDisplayProps {
 
 export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
   return (
-    <Card className="border-green-200 dark:border-green-900">
+    <Card className="border-2 border-emerald-200/50 dark:border-emerald-800/50 shadow-xl bg-linear-to-br from-emerald-50/50 via-green-50/30 to-teal-50/50 dark:from-emerald-950/30 dark:via-green-950/20 dark:to-teal-950/30">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-green-700 dark:text-green-400">
-          <CheckCircle2 className="h-5 w-5" />
-          Solution Found!
+        <CardTitle className="flex items-center gap-2">
+          <div className="p-2 rounded-lg bg-linear-to-br from-emerald-500 to-teal-500 text-white shadow-lg">
+            <CheckCircle2 className="h-5 w-5" />
+          </div>
+          <span className="bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent dark:from-emerald-400 dark:to-teal-400">
+            Solution Found!
+          </span>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-slate-700 dark:text-slate-300">
           Here&apos;s the complete solution to the puzzle
         </CardDescription>
       </CardHeader>
@@ -35,9 +39,11 @@ export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
           return (
             <div
               key={student}
-              className="p-4 rounded-lg border bg-zinc-50 dark:bg-zinc-900 space-y-2"
+              className="p-4 rounded-lg border-2 border-emerald-100 dark:border-emerald-900/50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm space-y-2 hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
             >
-              <div className="font-semibold text-lg">{student}</div>
+              <div className="font-semibold text-lg bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent dark:from-emerald-400 dark:to-teal-400">
+                {student}
+              </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-zinc-600 dark:text-zinc-400">
                   Language:
@@ -66,7 +72,10 @@ export function SolutionDisplay({ state, onPrint }: SolutionDisplayProps) {
         })}
 
         {onPrint && (
-          <Button onClick={onPrint} className="w-full mt-4" variant="outline">
+          <Button
+            onClick={onPrint}
+            className="w-full mt-4 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white border-0 shadow-lg font-semibold"
+          >
             Print Solution for Submission
           </Button>
         )}

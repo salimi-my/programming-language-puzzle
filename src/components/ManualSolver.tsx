@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   PuzzleState,
   Student,
@@ -20,7 +21,7 @@ import {
 import { solvePuzzle } from "@/lib/solver";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Select,
   SelectContent,
@@ -37,6 +38,18 @@ import {
   RotateCcw,
   AlertCircle,
 } from "lucide-react";
+
+// Map language names to icon paths
+const getLanguageIcon = (language: Language): string => {
+  const iconMap: Record<Language, string> = {
+    Python: "/pl-icons/python.svg",
+    Java: "/pl-icons/java.svg",
+    "C++": "/pl-icons/cplusplus.svg",
+    Ruby: "/pl-icons/ruby.svg",
+    Swift: "/pl-icons/swift.svg",
+  };
+  return iconMap[language];
+};
 
 export function ManualSolver() {
   const [state, setState] = useState<PuzzleState>(createEmptyPuzzleState());
@@ -148,9 +161,9 @@ export function ManualSolver() {
   return (
     <div className="space-y-6">
       {/* Instructions */}
-      <Alert>
-        <AlertCircle className="h-4 w-4" />
-        <AlertDescription>
+      <Alert className="border-2 border-blue-200/50 dark:border-blue-800/50 bg-linear-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-blue-950/30 dark:via-indigo-950/20 dark:to-purple-950/30 shadow-md">
+        <AlertCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+        <AlertDescription className="text-slate-700 dark:text-slate-300">
           Assign a language to each student and check the problem types they
           solve. Use the hints if you get stuck, or check your solution when you
           think you&apos;ve solved it!
@@ -159,15 +172,25 @@ export function ManualSolver() {
 
       {/* Controls */}
       <div className="flex flex-wrap gap-2">
-        <Button onClick={handleGetHint} variant="outline">
+        <Button
+          onClick={handleGetHint}
+          className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 shadow-md"
+        >
           <Lightbulb className="mr-2 h-4 w-4" />
           Get Hint
         </Button>
-        <Button onClick={handleCheckSolution} variant="default">
+        <Button
+          onClick={handleCheckSolution}
+          className="bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border-0 shadow-md"
+        >
           <CheckCircle2 className="mr-2 h-4 w-4" />
           Check Solution
         </Button>
-        <Button onClick={handleReset} variant="outline">
+        <Button
+          onClick={handleReset}
+          variant="outline"
+          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30"
+        >
           <RotateCcw className="mr-2 h-4 w-4" />
           Reset
         </Button>
@@ -211,30 +234,30 @@ export function ManualSolver() {
             maxProblems &&
             uniqueLanguages &&
             isPuzzleSolved(state) && (
-              <Alert className="border-green-200 dark:border-green-900">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
-                <AlertDescription className="text-green-700 dark:text-green-400">
+              <Alert className="border-2 border-emerald-200/50 dark:border-emerald-800/50 bg-linear-to-br from-emerald-50/50 via-green-50/30 to-teal-50/50 dark:from-emerald-950/30 dark:via-green-950/20 dark:to-teal-950/30 shadow-lg">
+                <CheckCircle2 className="text-emerald-600! dark:text-emerald-400" />
+                <AlertTitle className="font-semibold text-emerald-700 dark:text-emerald-300">
                   Correct! You&apos;ve solved the puzzle! 🎉
-                </AlertDescription>
+                </AlertTitle>
               </Alert>
             )}
           {validation.valid &&
             maxProblems &&
             uniqueLanguages &&
             !isPuzzleSolved(state) && (
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
+              <Alert className="border-2 border-amber-200/50 dark:border-amber-800/50 bg-linear-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/50 dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-orange-950/30 shadow-md">
+                <AlertCircle className="text-amber-600 dark:text-amber-400" />
+                <AlertTitle className="text-slate-700! dark:text-slate-300">
                   You&apos;re on the right track, but the solution is
                   incomplete. Keep going!
-                </AlertDescription>
+                </AlertTitle>
               </Alert>
             )}
         </div>
       )}
 
       {/* Interactive Grid */}
-      <Card>
+      <Card className="border-2 border-purple-200/50 dark:border-purple-800/50 shadow-xl card-gradient">
         <CardContent className="pt-6">
           <div className="space-y-4">
             {STUDENTS.map((student) => {
@@ -243,15 +266,19 @@ export function ManualSolver() {
               return (
                 <div
                   key={student}
-                  className="p-4 rounded-lg border bg-zinc-50 dark:bg-zinc-900 space-y-3"
+                  className="p-4 rounded-lg border-2 border-indigo-100 dark:border-indigo-900/50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm space-y-3 hover:shadow-lg transition-all duration-200 hover:scale-[1.01]"
                 >
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-lg">{student}</h4>
+                    <h4 className="font-semibold text-lg bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:to-purple-400">
+                      {student}
+                    </h4>
                   </div>
 
                   {/* Language Selection */}
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-medium w-24">Language:</span>
+                    <span className="text-sm font-semibold w-24 text-slate-700 dark:text-slate-300">
+                      Language:
+                    </span>
                     <Select
                       value={solution.language || "none"}
                       onValueChange={(value) =>
@@ -261,8 +288,25 @@ export function ManualSolver() {
                         )
                       }
                     >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select language" />
+                      <SelectTrigger className="w-[200px]">
+                        <SelectValue placeholder="Select language">
+                          {solution.language ? (
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center justify-center w-5 h-5 bg-white rounded-full p-0.5 shadow-inner">
+                                <Image
+                                  src={getLanguageIcon(solution.language)}
+                                  alt={`${solution.language} icon`}
+                                  width={14}
+                                  height={14}
+                                  className="shrink-0"
+                                />
+                              </div>
+                              <span>{solution.language}</span>
+                            </div>
+                          ) : (
+                            "None"
+                          )}
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="none">None</SelectItem>
@@ -275,7 +319,18 @@ export function ManualSolver() {
                               solution.language !== lang
                             }
                           >
-                            {lang}
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center justify-center w-5 h-5 bg-white rounded-full p-0.5 shadow-inner">
+                                <Image
+                                  src={getLanguageIcon(lang)}
+                                  alt={`${lang} icon`}
+                                  width={14}
+                                  height={14}
+                                  className="shrink-0"
+                                />
+                              </div>
+                              <span>{lang}</span>
+                            </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -284,7 +339,7 @@ export function ManualSolver() {
 
                   {/* Problem Types */}
                   <div className="flex items-start gap-3">
-                    <span className="text-sm font-medium w-24 pt-1">
+                    <span className="text-sm font-semibold w-24 pt-1 text-slate-700 dark:text-slate-300">
                       Problems:
                     </span>
                     <div className="flex-1 grid grid-cols-2 gap-2">
@@ -303,10 +358,11 @@ export function ManualSolver() {
                                 checked as boolean
                               )
                             }
+                            className="border-2 border-purple-300 data-[state=checked]:bg-linear-to-br data-[state=checked]:from-purple-500 data-[state=checked]:to-pink-500 data-[state=checked]:border-0"
                           />
                           <label
                             htmlFor={`${student}-${problem}`}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700 dark:text-slate-300"
                           >
                             {problem}
                           </label>

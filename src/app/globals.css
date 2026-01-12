@@ -124,6 +124,41 @@
   }
 }
 
+/* Custom Gradient Utilities */
+@layer utilities {
+  .gradient-primary {
+    @apply bg-linear-to-br from-blue-500 via-purple-500 to-pink-500;
+  }
+
+  .gradient-secondary {
+    @apply bg-linear-to-br from-cyan-400 via-blue-500 to-purple-600;
+  }
+
+  .gradient-accent {
+    @apply bg-linear-to-r from-orange-400 via-red-500 to-pink-500;
+  }
+
+  .gradient-success {
+    @apply bg-linear-to-br from-green-400 via-emerald-500 to-teal-600;
+  }
+
+  .gradient-bg-light {
+    @apply bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50;
+  }
+
+  .gradient-bg-dark {
+    @apply dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900;
+  }
+
+  .card-gradient {
+    @apply bg-linear-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-slate-800 dark:via-purple-900/10 dark:to-slate-800;
+  }
+
+  .glass-effect {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-lg border border-white/20 dark:border-slate-700/50;
+  }
+}
+
 /* Print Styles for Assignment Submission */
 @media print {
   /* Hide navigation and controls */

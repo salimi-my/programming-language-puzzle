@@ -85,18 +85,22 @@ export function SolverVisualization() {
     return (
       <div className="text-center py-12">
         <div className="mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Play className="h-8 w-8 text-primary" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-linear-to-br from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950 mb-4 shadow-lg">
+            <Play className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
           </div>
-          <h3 className="text-lg font-semibold mb-2">
+          <h3 className="text-lg font-semibold mb-2 bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:to-purple-400">
             Ready to See the Solution?
           </h3>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
+          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
             Click the button below to start the automatic solver. It will apply
             each clue step-by-step and show you how the solution is deduced.
           </p>
         </div>
-        <Button onClick={handleStart} size="lg">
+        <Button
+          onClick={handleStart}
+          size="lg"
+          className="bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-lg font-semibold"
+        >
           <Play className="mr-2 h-5 w-5" />
           Start Solving
         </Button>
@@ -122,16 +126,19 @@ export function SolverVisualization() {
   return (
     <div className="space-y-6">
       {/* Progress */}
-      <div className="space-y-2">
+      <div className="space-y-2 p-4 rounded-lg border-2 border-indigo-100 dark:border-indigo-900/50 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm shadow-md">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium">
+          <span className="font-semibold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:to-purple-400">
             Step {currentStep + 1} of {solution.steps.length}
           </span>
-          <span className="text-zinc-600 dark:text-zinc-400">
+          <span className="text-slate-600 dark:text-slate-400 font-medium">
             {Math.round(progress)}% Complete
           </span>
         </div>
-        <Progress value={progress} className="h-2" />
+        <Progress
+          value={progress}
+          className="h-3 bg-indigo-100 dark:bg-indigo-950 [&>div]:bg-linear-to-r [&>div]:from-indigo-500 [&>div]:via-purple-500 [&>div]:to-pink-500 shadow-inner"
+        />
       </div>
 
       {/* Controls */}
@@ -139,7 +146,11 @@ export function SolverVisualization() {
         <Button
           onClick={() => setIsPlaying(!isPlaying)}
           disabled={isComplete}
-          variant={isPlaying ? "secondary" : "default"}
+          className={
+            isPlaying
+              ? "bg-orange-500 hover:bg-orange-600 text-white border-0 shadow-md"
+              : "bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md"
+          }
         >
           {isPlaying ? (
             <>
@@ -158,12 +169,18 @@ export function SolverVisualization() {
           onClick={handlePrevious}
           disabled={currentStep === 0}
           variant="outline"
+          className="border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 dark:border-indigo-800 dark:hover:bg-indigo-900/30"
         >
           <SkipBack className="mr-2 h-4 w-4" />
           Previous Step
         </Button>
 
-        <Button onClick={handleNext} disabled={isComplete} variant="outline">
+        <Button
+          onClick={handleNext}
+          disabled={isComplete}
+          variant="outline"
+          className="border-purple-200 hover:border-purple-400 hover:bg-purple-50 dark:border-purple-800 dark:hover:bg-purple-900/30"
+        >
           <SkipForward className="mr-2 h-4 w-4" />
           Next Step
         </Button>
@@ -172,12 +189,17 @@ export function SolverVisualization() {
           onClick={handleSkipToEnd}
           disabled={isComplete}
           variant="outline"
+          className="border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-900/30"
         >
           <FastForward className="mr-2 h-4 w-4" />
           Skip to End
         </Button>
 
-        <Button onClick={handleReset} variant="outline">
+        <Button
+          onClick={handleReset}
+          variant="outline"
+          className="border-red-200 hover:border-red-400 hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/30"
+        >
           <RotateCcw className="mr-2 h-4 w-4" />
           Reset
         </Button>
@@ -225,9 +247,11 @@ export function SolverVisualization() {
       )}
 
       {/* Puzzle Grid */}
-      <Card>
+      <Card className="border-2 border-purple-200/50 dark:border-purple-800/50 shadow-xl card-gradient">
         <CardContent className="pt-6">
-          <h3 className="font-semibold mb-4">Current State</h3>
+          <h3 className="font-semibold mb-4 text-lg bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-pink-400">
+            Current State
+          </h3>
           <PuzzleGrid
             state={currentStepData?.stateAfter || solution.finalState}
             highlightedStudent={

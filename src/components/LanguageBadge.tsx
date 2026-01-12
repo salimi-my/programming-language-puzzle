@@ -25,18 +25,36 @@ export function LanguageBadge({
     Swift: "/pl-icons/swift.svg",
   };
 
+  // Map language names to gradient colors
+  const colorMap: Record<Language, string> = {
+    Python:
+      "bg-linear-to-r from-blue-500 to-yellow-500 text-white border-0 shadow-md hover:shadow-lg",
+    Java: "bg-linear-to-r from-red-500 to-orange-500 text-white border-0 shadow-md hover:shadow-lg",
+    "C++":
+      "bg-linear-to-r from-blue-600 to-cyan-500 text-white border-0 shadow-md hover:shadow-lg",
+    Ruby: "bg-linear-to-r from-red-600 to-pink-500 text-white border-0 shadow-md hover:shadow-lg",
+    Swift:
+      "bg-linear-to-r from-orange-500 to-red-500 text-white border-0 shadow-md hover:shadow-lg",
+  };
+
   const iconPath = iconMap[language];
+  const colorClass = colorMap[language];
 
   return (
-    <Badge variant={variant} className={`gap-1.5 ${className || ""}`}>
+    <Badge
+      variant={variant}
+      className={`gap-1.5 py-[3px] ps-1 ${colorClass} ${className || ""}`}
+    >
       {iconPath && (
-        <Image
-          src={iconPath}
-          alt={`${language} icon`}
-          width={16}
-          height={16}
-          className="shrink-0"
-        />
+        <div className="flex items-center justify-center w-4.5 h-4.5 bg-white rounded-full p-0.5 shadow-inner">
+          <Image
+            src={iconPath}
+            alt={`${language} icon`}
+            width={14}
+            height={14}
+            className="shrink-0"
+          />
+        </div>
       )}
       {language}
     </Badge>
