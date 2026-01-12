@@ -21,7 +21,7 @@ export default function Home() {
   const [showHelp, setShowHelp] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900">
+    <div className="min-h-screen bg-linear-to-b from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900">
       {/* Header */}
       <header className="border-b bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
@@ -109,7 +109,7 @@ export default function Home() {
                   key={clue.id}
                   className="flex gap-3 p-3 rounded-lg border bg-zinc-50 dark:bg-zinc-900"
                 >
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
                       {clue.id}
                     </div>

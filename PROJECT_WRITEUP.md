@@ -1,12 +1,14 @@
 # Programming Language Puzzle - Logic Solver
 
 ## Group Assignment Documentation
+
 **Course:** Discrete Structures  
 **Assignment:** Logic Puzzle Implementation (Puzzle 1)
 
 ---
 
 ## Table of Contents
+
 1. [Puzzle Description](#puzzle-description)
 2. [Solution Approach](#solution-approach)
 3. [Algorithm Explanation](#algorithm-explanation)
@@ -21,6 +23,7 @@
 
 **The Challenge:**  
 Five students—Alice, Bob, Charlie, Dave, and Eve—participate in a programming competition. Each student:
+
 - Uses exactly one unique programming language from: Python, Java, C++, Ruby, Swift
 - Solves different types of problems from: Math, Logic, Sorting, Graph
 - Solves a maximum of 3 different problem types
@@ -48,10 +51,12 @@ Determine which student uses which programming language and which types of probl
 This puzzle is a **Constraint Satisfaction Problem (CSP)**. Our approach:
 
 1. **Define Variables:**
+
    - Student → Language mapping (5 variables, each with 5 possible values)
    - Student → Problem Types mapping (5 variables, each with subsets of 4 problem types)
 
 2. **Define Constraints:**
+
    - Each clue represents a constraint that limits possible assignments
    - Some constraints are direct assignments (e.g., "Charlie uses Swift")
    - Others are implications (e.g., "Python user solves Math")
@@ -105,14 +110,17 @@ OUTPUT: Complete solution mapping students to languages and problems
 ### Key Techniques Used
 
 1. **Forward Checking:**
+
    - After each assignment, check which values are still valid
    - Eliminate values that violate constraints
 
 2. **Constraint Propagation:**
+
    - When one variable is assigned, propagate effects to related variables
    - Example: If Charlie uses Swift, Swift is removed from all other students
 
 3. **Logical Deduction:**
+
    - Use process of elimination
    - Example: If 4 languages are taken, the 5th student must use the remaining language
 
@@ -155,11 +163,13 @@ src/
 ### Core Components
 
 #### 1. Type System (`types/puzzle.ts`)
+
 - Defines all puzzle entities as TypeScript types
 - Ensures type safety throughout the application
 - Provides helper functions for state management
 
 #### 2. Solver (`lib/solver.ts`)
+
 - Implements the CSP algorithm
 - Returns step-by-step solution trace
 - Each step includes:
@@ -169,6 +179,7 @@ src/
   - Updated puzzle state
 
 #### 3. Validator (`lib/validator.ts`)
+
 - Validates puzzle states against all 10 clues
 - Checks additional constraints:
   - Maximum 3 problems per student
@@ -179,12 +190,12 @@ src/
 
 Our solver produces the following minimal valid solution based strictly on the 10 clues:
 
-| Student | Language | Problem Types |
-|---------|----------|---------------|
-| Alice   | Python   | Math |
-| Bob     | Java     | Logic, Graph |
-| Charlie | Swift    | Graph |
-| Dave    | C++      | Math |
+| Student | Language | Problem Types  |
+| ------- | -------- | -------------- |
+| Alice   | Python   | Math           |
+| Bob     | Java     | Logic, Graph   |
+| Charlie | Swift    | Graph          |
+| Dave    | C++      | Math           |
 | Eve     | Ruby     | Sorting, Logic |
 
 **Verification:** This solution satisfies all 10 clues!
@@ -196,28 +207,33 @@ Our solver produces the following minimal valid solution based strictly on the 1
 ## Features
 
 ### 1. Auto-Solver Mode
+
 - **Step-by-Step Visualization:** Watch the solver apply each clue
 - **Animation:** Smooth transitions showing state changes
 - **Progress Tracking:** Visual progress bar
 - **Controls:**
   - Start/Pause/Resume
+  - Previous Step (manual retreat)
   - Next Step (manual advance)
   - Skip to End
   - Reset
 
 ### 2. Manual Solving Mode
+
 - **Interactive Grid:** Users can make assignments themselves
 - **Real-Time Validation:** Immediate feedback on constraint violations
 - **Hint System:** Get help by applying the next clue
 - **Solution Checker:** Verify your solution
 
 ### 3. User Interface
+
 - **Responsive Design:** Works on desktop, tablet, and mobile
 - **Dark Mode Support:** Automatic theme detection
 - **Print Friendly:** Optimized for printing/PDF export
 - **Accessible:** Keyboard navigation and screen reader support
 
 ### 4. Educational Features
+
 - **Reasoning Display:** Each step explains why it's valid
 - **Constraint Highlighting:** See which clue is being applied
 - **Help System:** Comprehensive documentation built-in
@@ -228,6 +244,7 @@ Our solver produces the following minimal valid solution based strictly on the 1
 ## How to Run
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - npm, pnpm, yarn, or bun package manager
 
@@ -257,6 +274,7 @@ npx tsx src/lib/test-solver.ts
 ```
 
 This verifies:
+
 - The solver produces a correct solution
 - All 10 clues are satisfied
 - Additional constraints are met
@@ -266,16 +284,19 @@ This verifies:
 ## Code Quality
 
 ### Type Safety
+
 - Full TypeScript implementation
 - No `any` types
 - Strict type checking enabled
 
 ### Code Structure
+
 - Modular design with clear separation of concerns
 - Well-commented code explaining complex logic
 - Helper functions for common operations
 
 ### Testing
+
 - Automated validation of solver correctness
 - All 10 clues tested independently
 - Additional constraint checks
@@ -285,17 +306,20 @@ This verifies:
 ## Evaluation Criteria Compliance
 
 ### ✅ Correctness of Solutions
+
 - Solver produces the correct solution
 - Validated against all 10 clues
 - Automated tests verify correctness
 
 ### ✅ Code Efficiency
+
 - CSP algorithm with constraint propagation
 - O(n) complexity for most operations
 - Early pruning of invalid assignments
 - No brute-force searching
 
 ### ✅ Interactivity
+
 - Two interactive modes (Auto + Manual)
 - Real-time validation and feedback
 - Step-by-step visualization
@@ -303,6 +327,7 @@ This verifies:
 - Responsive user interface
 
 ### ✅ Clarity of Write-up
+
 - Detailed algorithm explanation
 - Clear documentation
 - Code comments explaining logic
