@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -29,9 +30,11 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-                Programming Language Puzzle
-              </h1>
+              <Link href="/">
+                <h1 className="text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 hover:opacity-80 transition-opacity cursor-pointer">
+                  Programming Language Puzzle
+                </h1>
+              </Link>
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 Discrete Structures - Logic Puzzle Solver
               </p>
@@ -74,7 +77,7 @@ export default function Home() {
                 <h4 className="font-semibold mb-2 text-purple-700 dark:text-purple-300">
                   Students
                 </h4>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {(
                     ["Alice", "Bob", "Charlie", "Dave", "Eve"] as Student[]
                   ).map((s) => (
@@ -86,7 +89,7 @@ export default function Home() {
                 <h4 className="font-semibold mb-2 text-blue-700 dark:text-blue-300">
                   Languages
                 </h4>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {(
                     ["Python", "Java", "C++", "Ruby", "Swift"] as Language[]
                   ).map((l) => (
@@ -98,7 +101,7 @@ export default function Home() {
                 <h4 className="font-semibold mb-2 text-indigo-700 dark:text-indigo-300">
                   Problem Types
                 </h4>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1.5">
                   {(["Math", "Logic", "Sorting", "Graph"] as ProblemType[]).map(
                     (p) => (
                       <ProblemTypeBadge
@@ -193,7 +196,7 @@ export default function Home() {
           Discrete Structures Group Assignment - Logic Puzzle Implementation
         </p>
         <p className="text-xs mt-1 text-slate-500 dark:text-slate-500">
-          Built with Next.js 16, React 19, TypeScript & Formal Logic
+          Built by Group 1 - Azmeer, Ikram, Syah, Hafiy & Salimi (NBCS2554A)
         </p>
       </footer>
 
