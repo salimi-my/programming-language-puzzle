@@ -123,3 +123,36 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Print Styles for Assignment Submission */
+@media print {
+  /* Hide navigation and controls */
+  header,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure content is visible */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Optimize page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Ensure tables and grids print well */
+  table {
+    page-break-inside: avoid;
+  }
+
+  /* Remove shadows and unnecessary styling */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

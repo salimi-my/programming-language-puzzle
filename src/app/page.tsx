@@ -1,65 +1,171 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, Brain, Play } from "lucide-react";
+import { CLUES } from "@/types/puzzle";
+import { SolverVisualization } from "@/components/SolverVisualization";
+import { ManualSolver } from "@/components/ManualSolver";
+import { HelpDialog } from "@/components/HelpDialog";
 
 export default function Home() {
+  const [showHelp, setShowHelp] = useState(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900">
+      {/* Header */}
+      <header className="border-b bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+                Programming Language Puzzle
+              </h1>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                Discrete Structures - Logic Puzzle Solver
+              </p>
+            </div>
+            <Button variant="outline" onClick={() => setShowHelp(true)}>
+              <BookOpen className="mr-2 h-4 w-4" />
+              Help
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        {/* Introduction */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Brain className="h-5 w-5" />
+              Puzzle 1: The Programming Language Challenge
+            </CardTitle>
+            <CardDescription>
+              Five students participate in a programming competition. Each uses
+              a unique programming language and solves different types of
+              problems. Can you figure out who uses which language and what
+              problems they solve?
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+              <div>
+                <h4 className="font-semibold mb-2">Students</h4>
+                <div className="space-y-1">
+                  {["Alice", "Bob", "Charlie", "Dave", "Eve"].map((s) => (
+                    <Badge key={s} variant="outline">
+                      {s}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Languages</h4>
+                <div className="space-y-1">
+                  {["Python", "Java", "C++", "Ruby", "Swift"].map((l) => (
+                    <Badge key={l} variant="secondary">
+                      {l}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div className="col-span-2 md:col-span-3">
+                <h4 className="font-semibold mb-2">Problem Types</h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Math", "Logic", "Sorting", "Graph"].map((p) => (
+                    <Badge key={p} variant="default">
+                      {p}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Clues Section */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Clues</CardTitle>
+            <CardDescription>
+              Use these 10 clues to deduce the solution
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4">
+              {CLUES.map((clue) => (
+                <div
+                  key={clue.id}
+                  className="flex gap-3 p-3 rounded-lg border bg-zinc-50 dark:bg-zinc-900"
+                >
+                  <div className="flex-shrink-0">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                      {clue.id}
+                    </div>
+                  </div>
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300">
+                    {clue.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Interactive Solver */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Solve the Puzzle</CardTitle>
+            <CardDescription>
+              Choose your approach: watch the AI solver work step-by-step, or
+              try solving it yourself manually
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="auto" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="auto" className="flex items-center gap-2">
+                  <Play className="h-4 w-4" />
+                  Auto Solver
+                </TabsTrigger>
+                <TabsTrigger value="manual" className="flex items-center gap-2">
+                  <Brain className="h-4 w-4" />
+                  Manual Mode
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="auto" className="space-y-4">
+                <SolverVisualization />
+              </TabsContent>
+
+              <TabsContent value="manual" className="space-y-4">
+                <ManualSolver />
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t mt-16 py-6 text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <p>
+          Discrete Structures Group Assignment - Logic Puzzle Implementation
+        </p>
+      </footer>
+
+      {/* Help Dialog */}
+      <HelpDialog open={showHelp} onOpenChange={setShowHelp} />
     </div>
   );
 }
