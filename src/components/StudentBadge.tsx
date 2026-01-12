@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Student } from "@/types/puzzle";
 import { User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface StudentBadgeProps {
   student: Student;
@@ -32,7 +33,7 @@ export function StudentBadge({
   return (
     <Badge
       variant={variant}
-      className={`gap-1.5 py-[3px] ps-1 ${colorClass} ${className || ""}`}
+      className={cn("gap-1.5 py-[3px] ps-1", colorClass, className)}
     >
       <div className="flex items-center justify-center w-4.5 h-4.5 bg-white rounded-full p-0.5 shadow-inner">
         <User className="h-3 w-3 shrink-0 text-slate-700" />

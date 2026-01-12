@@ -20,6 +20,7 @@ import {
   FastForward,
   InfoIcon,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function SolverVisualization() {
   const [solution, setSolution] = useState<SolutionResult | null>(null);
@@ -146,11 +147,12 @@ export function SolverVisualization() {
         <Button
           onClick={() => setIsPlaying(!isPlaying)}
           disabled={isComplete}
-          className={
+          className={cn(
+            "text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!",
             isPlaying
-              ? "bg-orange-500 hover:bg-orange-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
-              : "bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-0 shadow-md max-sm:py-2! max-sm:text-xs max-sm:px-2! max-sm:h-8!"
-          }
+              ? "bg-orange-500 hover:bg-orange-600"
+              : "bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600"
+          )}
         >
           {isPlaying ? (
             <>

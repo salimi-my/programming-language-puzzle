@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Language } from "@/types/puzzle";
+import { cn } from "@/lib/utils";
 
 interface LanguageBadgeProps {
   language: Language;
@@ -43,7 +44,7 @@ export function LanguageBadge({
   return (
     <Badge
       variant={variant}
-      className={`gap-1.5 py-[3px] ps-1 ${colorClass} ${className || ""}`}
+      className={cn("gap-1.5 py-[3px] ps-1", colorClass, className)}
     >
       {iconPath && (
         <div className="flex items-center justify-center w-4.5 h-4.5 bg-white rounded-full p-0.5 shadow-inner">

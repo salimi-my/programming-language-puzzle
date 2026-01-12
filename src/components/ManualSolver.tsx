@@ -424,7 +424,7 @@ export function ManualSolver() {
             uniqueLanguages &&
             isPuzzleSolved(state) && (
               <Alert className="border-2 border-emerald-200/50 dark:border-emerald-800/50 bg-linear-to-br from-emerald-50/50 via-green-50/30 to-teal-50/50 dark:from-emerald-950/30 dark:via-green-950/20 dark:to-teal-950/30 shadow-lg">
-                <CheckCircle2 className="text-emerald-600! dark:text-emerald-400" />
+                <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" />
                 <AlertTitle className="font-semibold text-emerald-700 dark:text-emerald-300">
                   Correct! You&apos;ve solved the puzzle! 🎉
                 </AlertTitle>
@@ -436,7 +436,7 @@ export function ManualSolver() {
             !isPuzzleSolved(state) && (
               <Alert className="border-2 border-amber-200/50 dark:border-amber-800/50 bg-linear-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/50 dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-orange-950/30 shadow-md">
                 <AlertCircle className="text-amber-600 dark:text-amber-400" />
-                <AlertTitle className="text-slate-700! dark:text-slate-300">
+                <AlertTitle className="text-slate-700 dark:text-slate-300">
                   You&apos;re on the right track, but the solution is
                   incomplete. Keep going!
                 </AlertTitle>

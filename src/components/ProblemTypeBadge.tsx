@@ -7,6 +7,7 @@ import {
   ChartNetwork,
   LucideIcon,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ProblemTypeBadgeProps {
   problemType: ProblemType;
@@ -47,7 +48,7 @@ export function ProblemTypeBadge({
   return (
     <Badge
       variant={variant}
-      className={`gap-1.5 py-[3px] ps-1 ${colorClass} ${className || ""}`}
+      className={cn("gap-1.5 py-[3px] ps-1", colorClass, className)}
     >
       {Icon && (
         <div className="flex items-center justify-center w-4.5 h-4.5 bg-white rounded-full p-0.5 shadow-inner">
