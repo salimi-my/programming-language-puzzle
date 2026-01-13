@@ -155,13 +155,13 @@ export default function Home() {
               Solve the Puzzle
             </CardTitle>
             <CardDescription className="text-slate-700 dark:text-slate-300">
-              Choose your approach: watch the AI solver work step-by-step, or
-              try solving it yourself manually
+              Choose your approach: watch the automated solver work
+              step-by-step, or try solving it yourself manually
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="auto" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6 bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950 p-1">
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-linear-to-r from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950 p-1 print:hidden">
                 <TabsTrigger
                   value="auto"
                   className="flex items-center gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg"

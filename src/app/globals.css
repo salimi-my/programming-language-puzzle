@@ -161,6 +161,17 @@
 
 /* Print Styles for Assignment Submission */
 @media print {
+  @page {
+    size: A4;
+    margin: 0.5cm;
+  }
+
+  /* Force viewport to 1024px width (lg breakpoint) */
+  html {
+    width: 1024px !important;
+    min-width: 1024px !important;
+  }
+
   /* Hide navigation and controls */
   header,
   footer,
@@ -169,10 +180,63 @@
     display: none !important;
   }
 
-  /* Ensure content is visible */
+  /* Ensure content is visible and set fixed width */
   body {
     background: white !important;
     color: black !important;
+    width: 1024px !important;
+    min-width: 1024px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Remove extra spacing and make content fill the width */
+  main,
+  #__next,
+  body > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 1rem !important;
+  }
+
+  /* Force containers to use full width */
+  .container,
+  [class*="container"],
+  [class*="max-w-"] {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Force responsive grid layouts at 1024px */
+  [class*="md:grid-cols-3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  [class*="md:grid-cols-2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Force responsive text sizes */
+  [class*="md:text-2xl"] {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  [class*="md:text-sm"] {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+
+  [class*="sm:text-base"] {
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  [class*="sm:pb-4"] {
+    padding-bottom: 1rem !important;
   }
 
   /* Optimize page breaks */
@@ -180,15 +244,54 @@
     page-break-before: always;
   }
 
-  /* Ensure tables and grids print well */
   table {
     page-break-inside: avoid;
   }
 
-  /* Remove shadows and unnecessary styling */
+  /* Remove shadows for clean print output */
   * {
     box-shadow: none !important;
     text-shadow: none !important;
+  }
+
+  /* Force color rendering in print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Replace bg-clip-text gradients with appropriate solid colors */
+  [class*="bg-clip-text"] {
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  /* Blue-purple-pink gradient -> Blue */
+  [class*="from-blue-600"][class*="via-purple-600"][class*="bg-clip-text"] {
+    color: #2563eb !important; /* blue-600 */
+  }
+
+  /* Purple-pink gradient -> Purple */
+  [class*="from-purple-600"][class*="to-pink-600"][class*="bg-clip-text"] {
+    color: #9333ea !important; /* purple-600 */
+  }
+
+  /* Blue-cyan gradient -> Blue */
+  [class*="from-blue-600"][class*="to-cyan-600"][class*="bg-clip-text"] {
+    color: #2563eb !important; /* blue-600 */
+  }
+
+  /* Indigo-purple gradient -> Indigo */
+  [class*="from-indigo-600"][class*="to-purple-600"][class*="bg-clip-text"] {
+    color: #4f46e5 !important; /* indigo-600 */
+  }
+
+  /* Emerald-teal gradient -> Emerald */
+  [class*="from-emerald-600"][class*="to-teal-600"][class*="bg-clip-text"] {
+    color: #059669 !important; /* emerald-600 */
   }
 }
 

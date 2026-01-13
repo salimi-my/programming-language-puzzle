@@ -127,7 +127,7 @@ export function SolverVisualization() {
   return (
     <div className="space-y-6">
       {/* Progress */}
-      <div className="space-y-2 p-4 rounded-lg border-2 border-indigo-100 dark:border-indigo-900/50 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm shadow-md">
+      <div className="space-y-2 p-4 rounded-lg border-2 border-indigo-100 dark:border-indigo-900/50 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm shadow-md print:mb-0">
         <div className="flex items-center justify-between text-sm">
           <span className="font-semibold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dark:from-indigo-400 dark:to-purple-400">
             Step {currentStep + 1} of {solution.steps.length}
@@ -248,6 +248,8 @@ export function SolverVisualization() {
         </>
       )}
 
+      <div className="hidden print:block py-1.5" />
+
       {/* Puzzle Grid */}
       <Card className="border-2 border-purple-200/50 dark:border-purple-800/50 shadow-xl card-gradient">
         <CardContent className="pt-6">
@@ -277,7 +279,11 @@ export function SolverVisualization() {
 
       {/* Final Solution Display */}
       {isComplete && (
-        <SolutionDisplay state={solution.finalState} onPrint={handlePrint} />
+        <>
+          <div className="hidden print:block py-1 print:break-before-page" />
+          <SolutionDisplay state={solution.finalState} onPrint={handlePrint} />
+          <div className="hidden print:block print:h-[calc(100vh-860px-120px)]" />
+        </>
       )}
     </div>
   );

@@ -51,7 +51,8 @@ export function ProofTree({
           </div>
 
           {/* Derivations Section */}
-          <div>
+          <div className="print:break-before-page">
+            <div className="hidden print:block py-4" />
             <h4 className="font-semibold mb-3 text-sm text-zinc-600 dark:text-zinc-400">
               Derived Facts {steps.length > 0 && `(${steps.length}/17)`}
             </h4>
