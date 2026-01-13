@@ -83,7 +83,7 @@ Five students (Alice, Bob, Charlie, Dave, Eve) participate in a programming comp
 ### Prerequisites
 
 - Node.js 18 or later
-- npm, pnpm, yarn, or bun
+- pnpm (package manager)
 
 ### Installation
 
@@ -92,8 +92,6 @@ Five students (Alice, Bob, Charlie, Dave, Eve) participate in a programming comp
 cd programming-language-puzzle
 
 # Install dependencies
-npm install
-# or
 pnpm install
 ```
 
@@ -101,8 +99,6 @@ pnpm install
 
 ```bash
 # Start the development server
-npm run dev
-# or
 pnpm dev
 
 # Open your browser and navigate to
@@ -338,8 +334,8 @@ For questions about this project, please contact your course instructor.
 To create an optimized production build:
 
 ```bash
-npm run build
-npm run start
+pnpm build
+pnpm start
 ```
 
 The application will be available at http://localhost:3000
